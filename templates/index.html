@@ -181,17 +181,19 @@
                 </div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {% for post in lista_posts %}
-                    <a href="{{ post.link_post }}" target="_blank" rel="noopener noreferrer" class="group block relative rounded-xl overflow-hidden shadow-lg aspect-square bg-gray-200 dark:bg-gray-800">
-                        <img src="/{{ post.imagem_url }}" alt="{{ post.legenda }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        
-                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 flex items-center justify-center transition-all duration-300">
-                            <svg class="w-12 h-12 text-white opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.08 2.525c.636-.247 1.363-.416 2.427-.465C9.53 2.013 9.884 2 12.315 2zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm4.878-8.25a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25z" clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                    </a>
-                    {% endfor %}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        <a href="https://www.instagram.com/p/DQnLwuHD4yv/?img_index=1" target="_blank" class="group block relative rounded-xl overflow-hidden shadow-lg aspect-square">
+                            <img src="/static/imagens/post1.jpeg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </a>
+
+                        <a href="https://www.instagram.com/p/DMi6TN1ut00/?img_index=1" target="_blank" class="group block relative rounded-xl overflow-hidden shadow-lg aspect-square">
+                            <img src="/static/imagens/post2.jpeg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </a>
+
+                        <a href="https://www.instagram.com/p/DLs0jXWvm9v/?img_index=1" target="_blank" class="group block relative rounded-xl overflow-hidden shadow-lg aspect-square">
+                            <img src="/static/imagens/post3.jpeg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

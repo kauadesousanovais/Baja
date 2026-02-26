@@ -30,13 +30,6 @@ class Parceiro(db.Model):
     logo = db.Column(db.String(200), nullable=True)
 
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    imagem_url = db.Column(db.String(200), nullable=False)
-    link_post = db.Column(db.String(300), nullable=False)
-    legenda = db.Column(db.String(200), nullable=True)
-
-
 # FUNÇÃO GOOGLE SHEETS
 
 def salvar_no_sheets(nome, matricula, curso, subsistema, carta):
@@ -83,15 +76,9 @@ def index():
 
     parceiros_com_imagem = [p for p in todos_parceiros if p.logo]
 
-    try:
-        posts = Post.query.all()
-    except Exception as e:
-        print(f"Erro ao buscar posts: {e}")
-        posts = []
 
     return render_template('index.html',
-                           lista_parceiros=parceiros_com_imagem,
-                           lista_posts=posts)
+                           lista_parceiros=parceiros_com_imagem)
 
 
 @app.route('/processo-seletivo')
