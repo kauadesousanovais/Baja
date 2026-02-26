@@ -22,9 +22,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-# ==========================
 # MODELOS
-# ==========================
 
 class Parceiro(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -39,9 +37,7 @@ class Post(db.Model):
     legenda = db.Column(db.String(200), nullable=True)
 
 
-# ==========================
 # FUNÇÃO GOOGLE SHEETS
-# ==========================
 
 def salvar_no_sheets(nome, matricula, curso, subsistema, carta):
 
@@ -74,9 +70,7 @@ def salvar_no_sheets(nome, matricula, curso, subsistema, carta):
     ])
 
 
-# ==========================
 # ROTAS
-# ==========================
 
 @app.route('/')
 def index():
@@ -120,15 +114,3 @@ def enviar_inscricao():
     salvar_no_sheets(nome, matricula, curso, subsistema, carta)
 
     return redirect(url_for('processo_seletivo'))
-
-
-# ==========================
-# EXECUÇÃO LOCAL
-# ==========================
-
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        print("Tabelas verificadas/criadas.")
-
-    app.run(debug=True, port=5000)
