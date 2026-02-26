@@ -15,17 +15,17 @@ with app.app_context():
     
     print("Criando posts...")
     post1 = Post(
-        imagem_url="imagens/post1.jpeg", 
+        imagem_url="static/imagens/post1.jpeg", 
         link_post="https://www.instagram.com/p/DQnLwuHD4yv/?img_index=1", 
         legenda="Já conhece o subsistema de Direção e Suspensão?"
     )
     post2 = Post(
-        imagem_url="imagens/post2.jpeg", 
+        imagem_url="static/imagens/post2.jpeg", 
         link_post="https://www.instagram.com/p/DMi6TN1ut00/?img_index=1", 
         legenda="Já ouviu falar no subsistema de Freios do Iaguary Baja?"
     )
     post3 = Post(
-        imagem_url="imagens/post3.jpeg", 
+        imagem_url="static/imagens/post3.jpeg", 
         link_post="https://www.instagram.com/p/DLs0jXWvm9v/?img_index=1", 
         legenda="Já conhece o subsistema de Powertrain?"
     )
