@@ -67,18 +67,7 @@ def salvar_no_sheets(nome, matricula, curso, subsistema, carta):
 
 @app.route('/')
 def index():
-
-    try:
-        todos_parceiros = Parceiro.query.all()
-    except Exception as e:
-        print(f"Erro ao buscar parceiros: {e}")
-        todos_parceiros = []
-
-    parceiros_com_imagem = [p for p in todos_parceiros if p.logo]
-
-
-    return render_template('index.html',
-                           lista_parceiros=parceiros_com_imagem)
+    return render_template('index.html')
 
 
 @app.route('/processo-seletivo')
