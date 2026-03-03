@@ -15,7 +15,7 @@ load_dotenv()
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.secret_key = os.getenv("SECRET_KEY", "fallback-secret-key-development")
 
-database_url = os.getenv("DATABASE_URL", 'sqlite:///site.db')
+database_url = os.getenv("DATABASE_URL", 'sqlite:///site.db')       
 
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -51,7 +51,7 @@ def salvar_no_sheets(nome, matricula, curso, subsistema, carta):
 
     client = gspread.authorize(credentials)
 
-    sheet = client.open("Processo Seletivo Iaguary").sheet1
+    sheet = client.open_by_key("131Ja3xT9Q2IW85fBmkLT5jtctAvasHway0D6O0SKxBw").sheet1
 
     sheet.append_row([
         nome,
