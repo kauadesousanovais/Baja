@@ -1,11 +1,13 @@
-from flask import Flask, send_from_directory, render_template, request, redirect, url_for
+from flask import Flask, send_from_directory, render_template, request, redirect, url_for, flash
 import os
 import json
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from datetime import datetime
-
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 import gspread
 from google.oauth2.service_account import Credentials
@@ -32,7 +34,7 @@ class Parceiro(db.Model):
 
 # FUNÇÃO GOOGLE SHEETS
 
-def salvar_no_sheets(nome, matricula, curso, subsistema, carta):
+def salvar_no_sheets(nome, email, matricula, curso, subsistema, carta):
 
     creds_json = os.getenv("GOOGLE_CREDENTIALS")
 
@@ -55,6 +57,7 @@ def salvar_no_sheets(nome, matricula, curso, subsistema, carta):
 
     sheet.append_row([
         nome,
+        email,
         matricula,
         curso,
         subsistema,
@@ -62,6 +65,40 @@ def salvar_no_sheets(nome, matricula, curso, subsistema, carta):
         datetime.now().strftime("%d/%m/%Y %H:%M")
     ])
 
+#FUNÇÃO EMAIL
+def enviar_email_confirmacao(destinatario, nome):
+    try:
+        remetente = os.getenv("EMAIL_REMETENTE")
+        senha = os.getenv("EMAIL_SENHA")
+
+        msg = MIMEMultipart()
+        msg["From"] = remetente
+        msg["To"] = destinatario
+        msg["Subject"] = "Confirmação de Inscrição - Processo Seletivo Iaguary"
+
+        corpo = f"""
+        Olá {nome},
+
+        Sua inscrição no Processo Seletivo Iaguary foi recebida com sucesso!
+
+        Em breve entraremos em contato com mais informações.
+
+        Atenciosamente,
+        Equipe Iaguary Baja
+            """
+
+        msg.attach(MIMEText(corpo, "plain"))
+
+        servidor = smtplib.SMTP("smtp.gmail.com", 587)
+        servidor.starttls()
+        servidor.login(remetente, senha)
+        servidor.send_message(msg)
+        servidor.quit()
+
+        print("Email enviado com sucesso.")
+
+    except Exception as e:
+        print("Erro ao enviar email:", e)
 
 # ROTAS
 
@@ -79,14 +116,23 @@ def processo_seletivo():
 def enviar_inscricao():
 
     nome = request.form.get('nome')
+    email = request.form.get('email')
     matricula = request.form.get('matricula')
     curso = request.form.get('curso')
     subsistema = request.form.get('subsistema')
     carta = request.form.get('carta')
 
-    if not all([nome, matricula, curso, subsistema, carta]):
-        return "Erro: todos os campos são obrigatórios.", 400
+    if not all([nome, email, matricula, curso, subsistema, carta]):
+        flash("Erro: todos os campos são obrigatórios.", "erro")
+        return redirect(url_for('processo_seletivo'))
 
-    salvar_no_sheets(nome, matricula, curso, subsistema, carta)
+    sucesso = salvar_no_sheets(nome, email, matricula, curso, subsistema, carta)
 
+    if not sucesso:
+        flash("Erro interno ao salvar inscrição.", "erro")
+        return redirect(url_for('processo_seletivo'))
+
+    enviar_email_confirmacao(email, nome)
+
+    flash("Inscrição realizada com sucesso! Verifique seu email.", "sucesso")
     return redirect(url_for('processo_seletivo'))
