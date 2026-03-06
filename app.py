@@ -73,6 +73,8 @@ def salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, sub
         data
     ])
 
+    return True
+
 #FUNÇÃO EMAIL
 def enviar_email_confirmacao(destinatario, nome):
     try:
