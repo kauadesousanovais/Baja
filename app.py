@@ -93,11 +93,6 @@ def upload_pdf_drive(credentials, arquivo, nome):
         'name': f'carta_{nome}.pdf',
         'parents': [pasta_id]
     }
-
-    drive_service.permissions().create(
-    fileId=file.get("id"),
-    body={"type": "anyone", "role": "reader"}
-    ).execute()
     
     media = MediaIoBaseUpload(
         io.BytesIO(arquivo.read()),
@@ -108,6 +103,11 @@ def upload_pdf_drive(credentials, arquivo, nome):
         body=file_metadata,
         media_body=media,
         fields='id'
+    ).execute()
+
+    drive_service.permissions().create(
+    fileId=file.get("id"),
+    body={"type": "anyone", "role": "reader"}
     ).execute()
 
     file_id = file.get('id')
