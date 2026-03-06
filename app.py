@@ -4,7 +4,10 @@ import json
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
+
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -55,6 +58,8 @@ def salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, sub
 
     sheet = client.open_by_key("131Ja3xT9Q2IW85fBmkLT5jtctAvasHway0D6O0SKxBw").sheet1
 
+    data = datetime.now(ZoneInfo("America/Sao_Paulo")).strftime("%d/%m/%Y %H:%M")
+
     sheet.append_row([
         nome,
         email,
@@ -65,7 +70,7 @@ def salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, sub
         semestre,
         subsistema,
         carta,
-        datetime.now().strftime("%d/%m/%Y %H:%M")
+        data
     ])
 
 #FUNÇÃO EMAIL
