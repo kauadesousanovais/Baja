@@ -87,7 +87,7 @@ def upload_pdf_drive(credentials, arquivo, nome):
 
     drive_service = build('drive', 'v3', credentials=credentials)
 
-    pasta_id = "1Hke7-6_w4eZDme2MMXh0SOI3bNAhvujY"
+    pasta_id = "1w-dBSwATwlmcHVO3eJ3aDiaiFjlTRkwU"
 
     file_metadata = {
         'name': f'carta_{nome}.pdf',
@@ -188,7 +188,10 @@ def enviar_inscricao():
         flash("Erro interno ao salvar inscrição.", "erro")
         return redirect(url_for('processo_seletivo'))
 
-    enviar_email_confirmacao(email, nome)
+    try:
+        enviar_email_confirmacao(email, nome)
+    except Exception as e:
+        print("Erro ao enviar email:", e)
 
     flash("Inscrição realizada com sucesso! Verifique seu email.", "sucesso")
     return redirect(url_for('processo_seletivo'))
