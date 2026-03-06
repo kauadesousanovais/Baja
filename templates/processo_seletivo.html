@@ -235,7 +235,6 @@
         </h2>
 
         <form method="POST" action="/enviar-inscricao"
-                enctype="multipart/form-data"
               class="bg-card-light dark:bg-card-dark p-8 rounded-xl shadow-lg space-y-6 max-w-3xl mx-auto">
 
             <input type="text" name="nome" placeholder="Nome Completo"
@@ -279,11 +278,10 @@
                 <option>Freios</option>
             </select>
 
-            <label class="block mb-2 font-semibold">Carta de Motivação (PDF)</label> 
-            <input type="file" name="carta_pdf"
-            accept="application/pdf"
-            class="w-full p-3 rounded border dark:bg-gray-800"
-            required>
+            <textarea name="carta" rows="6"
+                      placeholder="Carta de Motivação"
+                      class="w-full p-3 rounded border dark:bg-gray-800"
+                      required></textarea>
 
             <button type="submit"
                     class="w-full bg-primary hover:bg-red-700 text-white py-3 rounded-lg font-bold transition">

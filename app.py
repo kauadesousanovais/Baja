@@ -15,10 +15,6 @@ from email.mime.multipart import MIMEMultipart
 import gspread
 from google.oauth2.service_account import Credentials
 
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseUpload
-import io
-
 load_dotenv()
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
@@ -39,8 +35,10 @@ class Parceiro(db.Model):
     logo = db.Column(db.String(200), nullable=True)
 
 
-#FUNÇÃO SALVAR CREDENCIAIS
-def pegar_credenciais():
+# FUNÇÃO GOOGLE SHEETS
+
+def salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, subsistema, carta):
+
     creds_json = os.getenv("GOOGLE_CREDENTIALS")
 
     if not creds_json:
@@ -49,19 +47,12 @@ def pegar_credenciais():
 
     creds_dict = json.loads(creds_json)
 
-    scopes = ["https://www.googleapis.com/auth/spreadsheets",
-              "https://www.googleapis.com/auth/drive"]
+    scopes = ["https://www.googleapis.com/auth/spreadsheets"]
 
     credentials = Credentials.from_service_account_info(
         creds_dict,
         scopes=scopes
     )
-
-    return credentials
-
-# FUNÇÃO GOOGLE SHEETS
-
-def salvar_no_sheets(credentials, nome, email, matricula, telefone, cpf, curso, semestre, subsistema, link_pdf):
 
     client = gspread.authorize(credentials)
 
@@ -78,45 +69,9 @@ def salvar_no_sheets(credentials, nome, email, matricula, telefone, cpf, curso, 
         curso,
         semestre,
         subsistema,
-        link_pdf,
+        carta,
         data
     ])
-
-#FUNÇÃO ENVIAR PDF
-def upload_pdf_drive(credentials, arquivo, nome):
-
-    drive_service = build('drive', 'v3', credentials=credentials)
-
-    pasta_id = "1w-dBSwATwlmcHVO3eJ3aDiaiFjlTRkwU"
-
-    file_metadata = {
-        'name': f'carta_{nome}.pdf',
-        'parents': [pasta_id]
-    }
-    
-    media = MediaIoBaseUpload(
-        io.BytesIO(arquivo.read()),
-        mimetype='application/pdf'
-    )
-
-    file = drive_service.files().create(
-        body=file_metadata,
-        media_body=media,
-        fields='id',
-        supportsAllDrives=True
-    ).execute()
-
-    drive_service.permissions().create(
-        fileId=file.get("id"),
-        body={"type": "anyone", "role": "reader"},
-        supportsAllDrives=True
-    ).execute()
-
-    file_id = file.get('id')
-
-    link = f"https://drive.google.com/file/d/{file_id}/view"
-
-    return link
 
 #FUNÇÃO EMAIL
 def enviar_email_confirmacao(destinatario, nome):
@@ -176,22 +131,15 @@ def enviar_inscricao():
     curso = request.form.get('curso')
     semestre = request.form.get('semestre')
     subsistema = request.form.get('subsistema')
-    carta_pdf = request.files.get('carta_pdf')
+    carta = request.form.get('carta')
 
-    credentials = pegar_credenciais()
-
-    link_pdf = upload_pdf_drive(credentials, carta_pdf, nome)
-
-    sucesso = salvar_no_sheets(credentials, nome, email, matricula, telefone, cpf, curso, semestre, subsistema, link_pdf)
+    sucesso = salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, subsistema, carta)
 
     if not sucesso:
         flash("Erro interno ao salvar inscrição.", "erro")
         return redirect(url_for('processo_seletivo'))
 
-    try:
-        enviar_email_confirmacao(email, nome)
-    except Exception as e:
-        print("Erro ao enviar email:", e)
+    enviar_email_confirmacao(email, nome)
 
     flash("Inscrição realizada com sucesso! Verifique seu email.", "sucesso")
     return redirect(url_for('processo_seletivo'))
