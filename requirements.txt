@@ -5,4 +5,3 @@ SQLAlchemy
 psycopg2-binary
 gspread
 google-auth
-google-api-python-client
