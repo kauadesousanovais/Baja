@@ -128,7 +128,7 @@ def enviar_inscricao():
     subsistema = request.form.get('subsistema')
     carta = request.form.get('carta')
 
-    sucesso = salvar_no_sheets(nome, email, matricula, telefone, cpf, semestre, curso, subsistema, carta)
+    sucesso = salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, subsistema, carta)
 
     if not sucesso:
         flash("Erro interno ao salvar inscrição.", "erro")
