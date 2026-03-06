@@ -70,6 +70,41 @@
                 icon.innerText = 'menu'; 
             }
         }
+
+        function mascaraTelefone(campo) {
+            let valor = campo.value.replace(/\D/g, "");
+
+            if (valor.length > 11) valor = valor.slice(0,11);
+
+            if (valor.length > 6) {
+                campo.value = `(${valor.slice(0,2)}) ${valor.slice(2,7)}-${valor.slice(7)}`;
+            } 
+            else if (valor.length > 2) {
+                campo.value = `(${valor.slice(0,2)}) ${valor.slice(2)}`;
+            } 
+            else {
+                campo.value = valor;
+            }
+        }
+
+        function mascaraCPF(campo) {
+            let valor = campo.value.replace(/\D/g, "");
+
+            if (valor.length > 11) valor = valor.slice(0,11);
+
+            if (valor.length > 9) {
+                campo.value = `${valor.slice(0,3)}.${valor.slice(3,6)}.${valor.slice(6,9)}-${valor.slice(9)}`;
+            } 
+            else if (valor.length > 6) {
+                campo.value = `${valor.slice(0,3)}.${valor.slice(3,6)}.${valor.slice(6)}`;
+            } 
+            else if (valor.length > 3) {
+                campo.value = `${valor.slice(0,3)}.${valor.slice(3)}`;
+            } 
+            else {
+                campo.value = valor;
+            }
+        }
     </script>
 </head>
 
@@ -210,8 +245,34 @@
                     class="w-full p-3 rounded border dark:bg-gray-800" required>
 
             <input type="text" name="matricula" placeholder="Matrícula"
-                   class="w-full p-3 rounded border dark:bg-gray-800"
-                   required>
+                    class="w-full p-3 rounded border dark:bg-gray-800"
+                    required>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Telefone</label>
+                    <input 
+                    type="text"
+                    name="telefone"
+                    id="telefone"
+                    maxlength="15"
+                    oninput="mascaraTelefone(this)"
+                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="(00) 00000-0000"
+                    required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">CPF</label>
+                <input 
+                    type="text"
+                    name="cpf"
+                    id="cpf"
+                    maxlength="14"
+                    oninput="mascaraCPF(this)"
+                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="000.000.000-00"
+                    required>
+            </div>
 
             <select name="curso" class="w-full p-3 rounded border dark:bg-gray-800" required>
                 <option value="">Selecione o Curso</option>
@@ -221,6 +282,9 @@
                 <option>Ciencia da Computação</option>
                 <option>Engenharia de Produção</option>
             </select>
+
+            <input type="number" name="semestre" placeholder="Semestre atual (ex: 3)"
+                    class="w-full p-3 rounded border dark:bg-gray-800" required>
 
             <select name="subsistema" class="w-full p-3 rounded border dark:bg-gray-800" required>
                 <option value="">Selecione o Subsistema</option>

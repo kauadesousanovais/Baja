@@ -34,7 +34,7 @@ class Parceiro(db.Model):
 
 # FUNÇÃO GOOGLE SHEETS
 
-def salvar_no_sheets(nome, email, matricula, curso, subsistema, carta):
+def salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, subsistema, carta):
 
     creds_json = os.getenv("GOOGLE_CREDENTIALS")
 
@@ -59,7 +59,10 @@ def salvar_no_sheets(nome, email, matricula, curso, subsistema, carta):
         nome,
         email,
         matricula,
+        telefone,
+        cpf,
         curso,
+        semestre,
         subsistema,
         carta,
         datetime.now().strftime("%d/%m/%Y %H:%M")
@@ -118,15 +121,14 @@ def enviar_inscricao():
     nome = request.form.get('nome')
     email = request.form.get('email')
     matricula = request.form.get('matricula')
+    telefone = request.form.get('telefone')
+    cpf = request.form.get('cpf')
     curso = request.form.get('curso')
+    semestre = request.form.get('semestre')
     subsistema = request.form.get('subsistema')
     carta = request.form.get('carta')
 
-    if not all([nome, email, matricula, curso, subsistema, carta]):
-        flash("Erro: todos os campos são obrigatórios.", "erro")
-        return redirect(url_for('processo_seletivo'))
-
-    sucesso = salvar_no_sheets(nome, email, matricula, curso, subsistema, carta)
+    sucesso = salvar_no_sheets(nome, email, matricula, telefone, cpf, semestre, curso, subsistema, carta)
 
     if not sucesso:
         flash("Erro interno ao salvar inscrição.", "erro")
