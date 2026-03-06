@@ -94,6 +94,11 @@ def upload_pdf_drive(credentials, arquivo, nome):
         'parents': [pasta_id]
     }
 
+    drive_service.permissions().create(
+    fileId=file.get("id"),
+    body={"type": "anyone", "role": "reader"}
+    ).execute()
+    
     media = MediaIoBaseUpload(
         io.BytesIO(arquivo.read()),
         mimetype='application/pdf'
