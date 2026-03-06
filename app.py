@@ -37,7 +37,7 @@ class Parceiro(db.Model):
 
 # FUNÇÃO GOOGLE SHEETS
 
-def salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, subsistema, carta):
+def salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, subsistema1, subsistema2, carta):
 
     creds_json = os.getenv("GOOGLE_CREDENTIALS")
 
@@ -68,7 +68,8 @@ def salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, sub
         cpf,
         curso,
         semestre,
-        subsistema,
+        subsistema1,
+        subsistema2,
         carta,
         data
     ])
@@ -132,10 +133,11 @@ def enviar_inscricao():
     cpf = request.form.get('cpf')
     curso = request.form.get('curso')
     semestre = request.form.get('semestre')
-    subsistema = request.form.get('subsistema')
+    subsistema1 = request.form.get('subsistema1')
+    subsistema2 = request.form.get('subsistema2')
     carta = request.form.get('carta')
 
-    sucesso = salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, subsistema, carta)
+    sucesso = salvar_no_sheets(nome, email, matricula, telefone, cpf, curso, semestre, subsistema1, subsistema2, carta)
 
     if not sucesso:
         flash("Erro interno ao salvar inscrição.", "erro")
