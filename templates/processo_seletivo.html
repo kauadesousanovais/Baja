@@ -248,31 +248,13 @@
                     class="w-full p-3 rounded border dark:bg-gray-800"
                     required>
 
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700">Telefone</label>
-                    <input 
-                    type="text"
-                    name="telefone"
-                    id="telefone"
-                    maxlength="15"
-                    oninput="mascaraTelefone(this)"
-                    class="w-full p-3 rounded border dark:bg-gray-800"
-                    placeholder="(00) 00000-0000"
+            <input type="text" name="telefone" id="telefone" maxlength="15" placeholder="Telefone"
+                    oninput="mascaraTelefone(this)" class="w-full p-3 rounded border dark:bg-gray-800"
                     required>
-            </div>
 
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700">CPF</label>
-                <input 
-                    type="text"
-                    name="cpf"
-                    id="cpf"
-                    maxlength="14"
-                    oninput="mascaraCPF(this)"
-                    class="w-full p-3 rounded border dark:bg-gray-800"
-                    placeholder="000.000.000-00"
+            <input type="text" name="cpf" id="cpf" maxlength="14" placeholder="CPF"
+                    oninput="mascaraCPF(this)" class="w-full p-3 rounded border dark:bg-gray-800"
                     required>
-            </div>
 
             <select name="curso" class="w-full p-3 rounded border dark:bg-gray-800" required>
                 <option value="">Selecione o Curso</option>
