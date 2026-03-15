@@ -26,8 +26,8 @@ Certifique-se de ter o **Python (3.8+)** e o **`pip`** instalados.
 #### 2. Clonar o Repositório
 
 ```bash
-git clone https://github.com/Matheus-a31/Baja.git
-cd iaguary-baja-site # Ou o nome do diretório
+git clone https://github.com/kauadesousanovais/Baja.git
+cd Baja # Ou o nome do diretório
 
 
 
