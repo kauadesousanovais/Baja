@@ -8,8 +8,6 @@ Este website institucional é a vitrine digital da equipe, apresentando a histó
 
 ### Tecnologias Utilizadas
 
-* **Backend:** Python com **Flask** (Micro-framework)
-* **Banco de Dados:** **SQLAlchemy** (ORM)
 **Frontend:** **Tailwind CSS** (Framework de CSS utilitário) e HTML com Jinja2.
 * **Hospedagem:** **Vercel**
 
@@ -19,11 +17,7 @@ Este website institucional é a vitrine digital da equipe, apresentando a histó
 
 Para rodar o projeto em sua máquina local, siga os passos abaixo.    
 
-#### 1. Pré-requisitos
-
-Certifique-se de ter o **Python (3.8+)** e o **`pip`** instalados.
-
-#### 2. Clonar o Repositório
+#### 1. Clonar o Repositório
 
 ```bash
 git clone https://github.com/kauadesousanovais/Baja.git
